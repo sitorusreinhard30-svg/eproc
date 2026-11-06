@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype Harga Zonasi HET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;family=Nunito+Sans:wght@400;600&amp;family=Poppins:wght@700&amp;display=swap">
+<style>
+html,body{margin:0;height:100%;background:#1F2632;overflow:hidden}
+a{color:#2B50C8}a:hover{color:#1f3a94}
+input::placeholder{color:#A8ADB7}
+#stage{position:absolute;top:0;left:0;width:1440px;height:1024px;transform-origin:0 0}
+#switch{position:fixed;left:16px;bottom:16px;z-index:999;display:flex;gap:4px;padding:4px;border-radius:9999px;background:rgba(255,255,255,.92);box-shadow:0 4px 20px rgba(0,0,0,.25);font:600 12px/18px 'Open Sans',sans-serif}
+#switch a{padding:6px 12px;border-radius:9999px;color:#344054;text-decoration:none}
+#switch a[aria-current="page"]{background:#D22B50;color:#fff}
+#noscript{color:#fff;font:14px 'Open Sans',sans-serif;padding:24px}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<nav id="switch" aria-label="Pilih alternatif prototype">
+<a id="sw1" href="?alt=1">Alt. 1 · Edit di popup</a>
+<a id="sw2" href="?alt=2">Alt. 2 · Popup baca-saja</a>
+</nav>
+<noscript><p id="noscript">Prototype ini membutuhkan JavaScript.</p></noscript>
+
+<template id="tpl">
+<div style="position: relative; width: 1440px; height: 1024px; overflow: hidden; background: #FFFFFF; font-family: 'Open Sans', system-ui, sans-serif; color: #344054;">
+
+<header style="height: 92px; box-sizing: border-box; padding: 0 48px; display: flex; align-items: center; gap: 24px; border-bottom: 1px solid #E2E4E8; background: #FFFFFF;">
+<div style="flex-grow: 1; display: flex; align-items: center; gap: 6px;">
+<span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 7px; background: #D22B50; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.5-5h13L20 9"></path><path d="M4 9h16v11H4z"></path><path d="M9 20v-6h6v6"></path></svg></span>
+<div style="display: flex; flex-direction: column; line-height: 1;">
+<span style="font-size: 15px; font-weight: 700; color: #D22B50; letter-spacing: -0.3px;">INAPROC</span>
+<span style="font-size: 7px; color: #818996;">Manajemen Penyedia</span>
+</div>
+</div>
+<button aria-label="Notifikasi, 1 baru" style="position: relative; width: 44px; height: 44px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg><span style="position: absolute; top: 0; right: 2px; min-width: 20px; height: 20px; box-sizing: border-box; border: 1px solid #FFFFFF; border-radius: 32px; background: #D22B50; color: #FFFFFF; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">1</span></button>
+<button aria-label="Pesan" style="width: 44px; height: 44px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></button>
+<span aria-hidden="true" style="width: 1px; height: 32px; background: #E2E4E8;"></span>
+<button style="height: 44px; padding: 0; border: none; background: transparent; display: flex; align-items: center; gap: 8px; font-family: 'Nunito Sans', 'Open Sans', sans-serif; font-size: 16px; font-weight: 600; color: #344054; cursor: pointer;"><span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: #EAEDF9; color: #2B50C8; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">TJ</span>Toko Jaya Sekali<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+</header>
+
+<sc-if value="{{isZonasi}}" hint-placeholder-val="{{ true }}">
+<main style="height: 859px; overflow-y: auto; box-sizing: border-box; padding: 24px 134px 48px 134px; display: flex; flex-direction: column; gap: 24px;">
+<div style="display: flex; align-items: flex-start; gap: 24px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px;">
+<h1 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 700;">Atur Harga Zonasi</h1>
+<p style="margin: 0; font-size: 14px; line-height: 21px;">Kisaran harga untuk zona wilayah tertentu. Reseller bisa menggunakan ini sebagai patokan harga pasar. Harga zonasi di luar pajak.</p>
+</div>
+<button onClick="{{openBulk}}" style="height: 40px; padding: 0 12px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 400; color: #344054; white-space: nowrap; cursor: pointer;">Atur Harga Zonasi Sekaligus</button>
+</div>
+
+<sc-if value="{{showBanner}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="padding: 16px; border: 1px solid #F04438; border-left-width: 4px; border-radius: 4px; background: #FFFAFA; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 21px;">
+<strong style="font-size: 16px; line-height: 24px;">{{openAll}} lokasi belum memenuhi kriteria Harga Eceran Tertinggi (HET) dari Kemendikdasmen</strong>
+<span>Sesuaikan harga produk sesuai HET zonasinya agar transaksi dapat diproses. <button onClick="{{openTinjau}}" style="padding: 0; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 700; color: #2B50C8; cursor: pointer;">Tinjau Harga Zonasi</button></span>
+</div>
+</sc-if>
+
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px;"><span aria-hidden="true" style="width: 24px; height: 24px; box-sizing: border-box; border: 1px solid #A8ADB7; border-radius: 4px; background: #FFFFFF;"></span>{{selectAllLabel}}</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start;">
+<sc-for list="{{columns}}" as="col" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 24px;">
+<sc-for list="{{col.groups}}" as="g" hint-placeholder-count="3">
+<section style="border: 1px solid #E2E4E8; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; align-items: center; gap: 10px;">
+<span aria-hidden="true" style="width: 24px; height: 24px; box-sizing: border-box; border: 1px solid {{g.cbBorder}}; border-radius: 4px; background: {{g.cbBg}}; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>
+<strong style="flex-grow: 1; font-size: 14px; line-height: 20px;">{{g.prov}}</strong>
+<button onClick="{{g.toggle}}" aria-expanded="{{g.expanded}}" aria-label="Tampilkan kota/kabupaten {{g.prov}}" style="width: 32px; height: 32px; border: none; background: transparent; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate({{g.chevron}}deg);"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+<div style="display: grid; grid-template-columns: 232px minmax(0, 1fr) 232px; gap: 8px 0; align-items: center; font-size: 14px;">
+<span style="font-weight: 600;">Harga Produk</span><span></span><span style="font-weight: 600;">Harga Setelah Pajak</span>
+<div style="height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #E2E4E8; border-radius: 8px; overflow: hidden; background: #FFFFFF;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><span style="padding: 0 12px; color: #A8ADB7;">{{g.provPrice}}</span></div>
+<span style="text-align: center;">=</span>
+<div style="height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #818996; border-radius: 8px; overflow: hidden; background: #F5F6F9;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><span style="padding: 0 12px; color: #818996;">{{g.provTax}}</span></div>
+</div>
+<sc-if value="{{g.open}}" hint-placeholder-val="{{ true }}">
+<div style="border-top: 1px solid #E2E4E8; padding: 24px 0 0 32px; display: flex; flex-direction: column; gap: 24px;">
+<sc-for list="{{g.rows}}" as="k" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+<div style="display: flex; align-items: center; gap: 8px; font-weight: 700; line-height: 20px;"><span aria-hidden="true" style="width: 24px; height: 24px; box-sizing: border-box; border: 1px solid #FFFFFF; border-radius: 4px; background: #2B50C8; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>{{k.kab}}<span style="position: relative; display: inline-flex;"><button onMouseEnter="{{k.showTip}}" onMouseLeave="{{k.hideTip}}" onFocus="{{k.showTip}}" onBlur="{{k.hideTip}}" onClick="{{k.toggleTip}}" aria-describedby="tip-{{k.id}}" style="height: 24px; padding: 0 8px; border: none; border-radius: 4px; background: #F5F6F9; display: inline-flex; align-items: center; font-family: inherit; font-size: 12px; line-height: 18px; font-weight: 600; color: #344054; cursor: help;">{{k.zone}}</button><sc-if value="{{k.tipOpen}}" hint-placeholder-val="{{ false }}"><span role="tooltip" id="tip-{{k.id}}" style="position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); z-index: 20; width: 340px; display: flex; flex-direction: column; align-items: center; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.1));"><span style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; background: #344054; color: #FFFFFF; display: flex; flex-direction: column; gap: 4px; font-weight: 400;"><span style="font-size: 14px; line-height: 20px;">Cakupan {{k.zone}}</span><span style="font-size: 12px; line-height: 18px;">Wilayah ini masuk {{k.zone}} sesuai ketentuan pembagian kriteria Harga Eceran Tertinggi (HET) dari Kemendikdasmen.</span></span><svg width="16" height="6" viewBox="0 0 16 6" aria-hidden="true"><path d="M0 0h16L8 6z" fill="#344054"></path></svg></span></sc-if></span></div>
+<div style="display: grid; grid-template-columns: 232px minmax(0, 1fr) 232px; gap: 8px 0; align-items: center;">
+<span style="font-weight: 600;">Harga Produk</span><span></span><span style="font-weight: 600;">Harga Setelah Pajak</span>
+<div style="height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid {{k.border}}; border-radius: 8px; overflow: hidden; background: #FFFFFF;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><input inputmode="numeric" aria-label="Harga produk {{k.kab}}" value="{{k.priceText}}" onChange="{{k.onChange}}" style="flex-grow: 1; min-width: 0; height: 100%; padding: 0 12px; border: none; outline: none; font-family: inherit; font-size: 14px; color: #344054;"></div>
+<span style="text-align: center;">=</span>
+<div style="height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #818996; border-radius: 8px; overflow: hidden; background: #F5F6F9;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><span style="padding: 0 12px; color: #818996;">{{k.taxText}}</span></div>
+</div>
+<span style="font-size: 12px; line-height: 18px; color: {{k.helperColor}};">{{k.helper}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</section>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</main>
+<footer style="height: 73px; box-sizing: border-box; padding: 16px 135px; display: flex; justify-content: flex-end; gap: 16px; background: #FFFFFF; box-shadow: 0 2px 10px 0 #0000001a, 0 0 2px 0 #00000033;">
+<button onClick="{{goProduk}}" style="width: 160px; height: 40px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Kembali</button>
+<button onClick="{{savePage}}" style="height: 40px; padding: 0 12px; border: 1px solid #D22B50; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #D22B50; cursor: pointer;">Simpan &amp; Tambah Produk Lagi</button>
+<button onClick="{{savePage}}" style="width: 160px; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Simpan</button>
+</footer>
+</sc-if>
+
+<sc-if value="{{isProduk}}" hint-placeholder-val="{{ false }}">
+<main style="height: 859px; overflow-y: auto; box-sizing: border-box; padding: 24px 135px 48px 135px; display: flex; flex-direction: column; gap: 24px;">
+<section style="padding: 24px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 48px; align-items: center;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><strong style="font-size: 16px;">Varian</strong><span style="font-size: 12px; color: #818996;">Tambah varian untuk produk dengan berbagai jenis</span></div>
+<button style="justify-self: start; height: 40px; padding: 0 12px; border: none; border-radius: 8px; background: #F5F6F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">+ Tambah Varian</button>
+</section>
+<section style="padding: 24px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; display: flex; flex-direction: column; gap: 24px;">
+<h2 style="margin: 0; padding-bottom: 16px; border-bottom: 1px solid #E2E4E8; font-size: 18px; font-weight: 700;">Harga</h2>
+<div style="display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 24px 48px; align-items: start; font-size: 14px;">
+<strong style="padding-top: 10px; font-size: 16px;">Minimum Pembelian</strong>
+<input aria-label="Minimum pembelian" value="1" style="width: 232px; height: 40px; box-sizing: border-box; padding: 0 12px; border: 1px solid #A8ADB7; border-radius: 8px; font-family: inherit; font-size: 14px; color: #344054;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><span style="display: flex; align-items: center; gap: 8px;"><strong style="font-size: 16px;">Harga Satuan</strong><span style="padding: 0 6px; border-radius: 4px; background: #F5F6F9; font-size: 12px; color: #818996;">Wajib</span></span><span style="font-size: 12px; color: #818996;">Harga ini diluar pajak dan ongkos kirim.</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px;"><div style="display: flex; align-items: center; gap: 16px;"><div style="width: 232px; height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #A8ADB7; border-radius: 8px; overflow: hidden;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><input aria-label="Harga satuan" placeholder="Harga" style="flex-grow: 1; min-width: 0; height: 100%; padding: 0 12px; border: none; outline: none; font-family: inherit; font-size: 14px;"></div><span>=</span><div style="width: 232px; height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #818996; border-radius: 8px; overflow: hidden; background: #F5F6F9;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><span style="padding: 0 12px; color: #818996;">0</span></div></div><span style="padding-left: 280px; font-size: 12px; color: #818996;">Harga tayang termasuk pajak</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px;"><strong style="font-size: 16px;">Harga Grosir</strong><span style="font-size: 12px; color: #818996;">Tambah harga grosir untuk pembelian jumlah tertentu. Harga ini diluar pajak dan ongkos kirim.</span></div>
+<button style="justify-self: start; height: 40px; padding: 0 12px; border: none; border-radius: 8px; background: #F5F6F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">+ Tambah Harga Grosir</button>
+<div style="display: flex; flex-direction: column; gap: 4px;"><strong style="font-size: 16px;">Harga Zonasi</strong><span style="font-size: 12px; color: #818996;">Kisaran harga untuk zona wilayah tertentu. Reseller bisa menggunakan ini sebagai patokan harga pasar. Harga zonasi termasuk ongkos kirim di luar pajak.</span></div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 12px;"><span aria-hidden="true" style="width: 32px; height: 18px; border-radius: 9999px; background: #2B50C8; position: relative;"><span style="position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 9999px; background: #FFFFFF;"></span></span>Aktif</span>
+<button onClick="{{goZonasi}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 8px; background: #F5F6F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">Atur Harga Zonasi</button>
+<sc-if value="{{savedOk}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="align-self: stretch; padding: 12px 16px; border: 1px solid #039855; border-left-width: 4px; border-radius: 4px; background: #F6FEF9; display: flex; align-items: center; gap: 8px;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#039855"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Harga zonasi sudah diatur</div>
+</sc-if>
+</div>
+</div>
+</section>
+<section style="padding: 24px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; display: flex; flex-direction: column; gap: 24px;">
+<h2 style="margin: 0; padding-bottom: 16px; border-bottom: 1px solid #E2E4E8; font-size: 18px; font-weight: 700;">Informasi Stok</h2>
+<div style="display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 24px 48px; align-items: center; font-size: 14px;">
+<span style="display: flex; align-items: center; gap: 8px;"><strong style="font-size: 16px;">Jumlah Stok</strong><span style="padding: 0 6px; border-radius: 4px; background: #F5F6F9; font-size: 12px; color: #818996;">Wajib</span></span>
+<input aria-label="Jumlah stok" placeholder="Masukkan jumlah stok" style="width: 232px; height: 40px; box-sizing: border-box; padding: 0 12px; border: 1px solid #E2E4E8; border-radius: 8px; font-family: inherit; font-size: 14px;">
+<span style="display: flex; align-items: center; gap: 8px;"><strong style="font-size: 16px;">Satuan Barang</strong><span style="padding: 0 6px; border-radius: 4px; background: #F5F6F9; font-size: 12px; color: #818996;">Wajib</span></span>
+<button style="width: 232px; height: 40px; box-sizing: border-box; padding: 0 12px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; display: flex; align-items: center; justify-content: space-between; font-family: inherit; font-size: 14px; color: #A8ADB7; cursor: pointer;">Pilih satuan barang<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+</section>
+</main>
+<footer style="height: 73px; box-sizing: border-box; padding: 16px 135px; display: flex; justify-content: flex-end; gap: 16px; background: #FFFFFF; box-shadow: 0 2px 10px 0 #0000001a, 0 0 2px 0 #00000033;">
+<button style="width: 160px; height: 40px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Batal</button>
+<button style="height: 40px; padding: 0 12px; border: 1px solid #D22B50; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #D22B50; cursor: pointer;">Simpan &amp; Lanjutkan Nanti</button>
+<button style="height: 40px; padding: 0 12px; border: 1px solid #D22B50; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #D22B50; cursor: pointer;">Simpan &amp; Tambah Baru</button>
+<button style="width: 160px; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Simpan</button>
+</footer>
+</sc-if>
+
+<sc-if value="{{showOverlay}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 50; background: rgba(31, 38, 50, 0.6); display: flex; align-items: center; justify-content: center;">
+
+<sc-if value="{{isBulk}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="judul-bulk" style="width: 800px; box-sizing: border-box; padding: 24px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 8px 40px 0 #00000033, 0 0 4px 0 #0000001a; display: flex; flex-direction: column; gap: 16px;">
+<h2 id="judul-bulk" style="margin: 0; font-size: 18px; line-height: 28px; font-weight: 700;">Atur Harga Zonasi Sekaligus</h2>
+<div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 24px;">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: #2B50C8; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>
+<span>Unduh Format</span>
+<span aria-hidden="true" style="width: 190px; height: 2px; background: {{stepLine}};"></span>
+<span aria-hidden="true" style="width: 40px; height: 40px; box-sizing: border-box; border-radius: 9999px; border: 2px solid {{step2Ring}}; display: flex; align-items: center; justify-content: center; font-family: Poppins, 'Open Sans', sans-serif; font-size: 14px;">2</span>
+<span>Unggah Dokumen</span>
+</div>
+
+<sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 16px; border: 1px solid #E2E4E8; border-radius: 8px; display: flex; align-items: center; gap: 16px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px;"><strong style="font-size: 16px; line-height: 24px;">Template dokumen pengaturan ongkir sekaligus</strong><span style="font-size: 12px; color: #818996;">Unduh dokumen excel untuk mengatur harga zonasi secara sekaligus berdasarkan lokasi.</span></div>
+<button onClick="{{downloadTemplate}}" style="height: 40px; padding: 0 12px; display: flex; align-items: center; gap: 8px; border: none; border-radius: 8px; background: #F5F6F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"></path></svg>Unduh Template</button>
+</div>
+<div style="padding: 16px; border: 1px solid #2E90FA; border-left-width: 4px; border-radius: 4px; background: #F5FAFF; display: flex; gap: 12px; font-size: 14px; line-height: 21px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E90FA" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+<span>Gunakan Harga Eceran Tertinggi (HET) sebagai batas maksimal saat mengisi kolom harga produk di dokumen atur harga zonasi. Besarnya HET berbeda di setiap zona sesuai HPP dan biaya distribusi produk kemendikdasmen.</span>
+</div>
+<div style="border: 1px solid #A8ADB7; overflow: hidden;">
+<div style="display: grid; grid-template-columns: 90px minmax(0, 1fr) 230px; height: 56px; align-items: center; background: #F5F6F9; font-size: 14px; font-weight: 700;"><span style="padding: 0 16px;">Zona</span><span style="padding: 0 16px;">Cakupan Provinsi</span><span style="padding: 0 16px;">Harga Eceran Tertinggi (HET)</span></div>
+<div style="height: 234px; overflow-y: auto;">
+<sc-for list="{{zoneInfo}}" as="z" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 90px minmax(0, 1fr) 230px; min-height: 56px; align-items: center; background: {{z.zebra}}; font-size: 14px; line-height: 21px;"><strong style="padding: 8px 16px;">{{z.label}}</strong><span style="padding: 8px 16px;">{{z.cov}}</span><strong style="padding: 8px 16px;">Maksimal {{z.het}}</strong></div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding-top: 8px;">
+<button onClick="{{closeModal}}" style="flex: 1; height: 40px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Batal</button>
+<button onClick="{{toStep2}}" style="flex: 1; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Selanjutnya</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 14px; line-height: 21px;">
+<p style="margin: 0;">Mohon pastikan hal berikut:</p>
+<ul style="margin: 0; padding-left: 20px;">
+<li>Gunakan template resmi yang telah disediakan.</li>
+<li>Simpan dokumen dalam format .xlsx.</li>
+<li>Pertahankan kolom dan struktur sesuai aslinya, tanpa diubah.</li>
+<li>Isi data harga per wilayah dengan benar.</li>
+<li>Batasi ukuran dokumen maksimal 50 MB.</li>
+<li>Kosongkan kolom provinsi jika data sudah diisi di kolom Kota/Kabupaten, karena data provinsi akan diabaikan.</li>
+</ul>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<strong style="font-size: 14px; font-weight: 600;">{{uploadLabel}}</strong>
+<sc-if value="{{upIdle}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 24px 16px; border: 1px dashed #CED2D8; border-radius: 8px; background: #FAFBFB; display: flex; align-items: center; gap: 16px;">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: #EFF8FF; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#2E90FA"><path d="M17.5 19H7a5 5 0 0 1-.9-9.92A6.5 6.5 0 0 1 18.6 8.6 5.2 5.2 0 0 1 17.5 19z"></path><path d="M12 16v-5M9.5 13.5L12 11l2.5 2.5" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;"><strong style="font-size: 14px; font-weight: 600;">Pilih atau tarik dokumen di sini</strong><span style="font-size: 12px; color: #818996;">XLX (max. 50Mb)</span></div>
+<button onClick="{{startUpload}}" style="height: 32px; padding: 0 8px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 600; color: #344054; cursor: pointer;">Unggah dokumen</button>
+</div>
+</sc-if>
+<sc-if value="{{upLoading}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 16px; border: 1px solid #E2E4E8; border-radius: 8px; display: flex; gap: 16px;">
+<span aria-hidden="true" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 9999px; background: #EFF8FF; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#2E90FA"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+<strong style="font-size: 14px; font-weight: 600;">Harga Zonasi.xlsx.</strong>
+<div style="display: flex; align-items: center;"><span style="flex-grow: 1; font-size: 12px; color: #818996;">16 MB</span><button onClick="{{cancelUpload}}" style="padding: 0; border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 600; color: #D22B50; cursor: pointer;">Batalkan</button></div>
+<div style="display: flex; align-items: center; gap: 16px;"><div role="progressbar" aria-label="Progres unggah" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="flex-grow: 1; height: 6px; border-radius: 9999px; background: #E2E4E8; overflow: hidden;"><div style="height: 100%; width: {{progress}}%; background: #F79009;"></div></div><span style="font-size: 12px; color: #818996;">{{progress}}%</span></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{upDone}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 16px; border: 1px solid #E2E4E8; border-radius: 8px; display: flex; gap: 16px;">
+<span aria-hidden="true" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 9999px; background: #EFF8FF; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#2E90FA"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+<strong style="font-size: 14px; font-weight: 600;">Harga Zonasi.xlsx.</strong>
+<div style="display: flex; align-items: center;"><span style="flex-grow: 1; font-size: 12px; color: #818996;">16 MB</span><button onClick="{{removeFile}}" style="padding: 0; border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 600; color: #D22B50; cursor: pointer;">Hapus</button></div>
+<button onClick="{{startUpload}}" style="align-self: flex-start; padding: 0; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">Ulangi unggah Berkas</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{upError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="padding: 16px; border: 1px solid #F04438; border-radius: 8px; background: #FFFAFA; display: flex; gap: 16px;">
+<span aria-hidden="true" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 9999px; background: #FEF3F2; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#F04438"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+<strong style="font-size: 14px; font-weight: 600;">{{upErrorText}}</strong>
+<span style="font-size: 12px; color: #818996;">Harga Zonasi.xlsx.</span>
+<button onClick="{{startUpload}}" style="align-self: flex-start; padding: 0; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">Ulangi unggah Berkas</button>
+</div>
+</div>
+</sc-if>
+</div>
+<div style="display: flex; gap: 16px; padding-top: 8px;">
+<button onClick="{{toStep1}}" style="flex: 1; height: 40px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Kembali</button>
+<button onClick="{{saveUpload}}" style="flex: 1; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Simpan</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isTinjau}}" hint-placeholder-val="{{ true }}">
+<div role="dialog" aria-modal="true" aria-labelledby="judul-tinjau" style="position: relative; width: 947px; height: {{modalH}}; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2), 0 0 4px 0 rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 24px 24px 8px 24px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; align-items: center; gap: 10px;">
+<h2 id="judul-tinjau" style="flex-grow: 1; margin: 0; font-size: 18px; line-height: 28px; font-weight: 700;">Revisi Harga Zonasi produk yang Melebihi HET</h2>
+<button onClick="{{closeModal}}" aria-label="Tutup" style="width: 32px; height: 32px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: #818996;">Daftar lokasi berikut memiliki harga produk yang melebihi HET.</p>
+</div>
+
+<div style="flex: 1; min-height: 0; padding: 0 16px 8px 16px; display: flex; flex-direction: column; gap: 16px;">
+<div role="tablist" aria-label="Zona" style="height: 56px; flex-shrink: 0; display: flex; gap: 12px; border-bottom: 1px solid #E2E4E8;">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="7">
+<button role="tab" aria-selected="{{t.selected}}" onClick="{{t.select}}" style="height: 56px; box-sizing: border-box; padding: 0 12px; display: flex; align-items: center; gap: 8px; border: none; border-bottom: 4px solid {{t.line}}; background: transparent; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: {{t.weight}}; color: {{t.color}}; white-space: nowrap; cursor: pointer;">{{t.text}}<sc-if value="{{t.active}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; padding: 0 6px; box-sizing: border-box; border: 1px solid #FFFFFF; border-radius: 32px; background: #D22B50; color: #FFFFFF; font-size: 14px; line-height: 21px; font-weight: 600; text-align: center;">{{t.count}}</span></sc-if></button>
+</sc-for>
+</div>
+
+<sc-if value="{{tabAll}}" hint-placeholder-val="{{ true }}">
+<div style="flex-shrink: 0; padding: 16px; border: 1px solid {{calloutBorder}}; border-left-width: {{calloutLeft}}; border-radius: 4px; background: {{calloutBg}}; font-size: 14px; line-height: 20px;">Gunakan Harga Eceran Tertinggi (HET) sebagai batas maksimal saat merevisi harga produk. Besarnya HET berbeda di setiap zona sesuai HPP dan biaya distribusi produk kemendikdasmen. <sc-if value="{{isAlt1}}" hint-placeholder-val="{{ true }}">Anda juga dapat revisi menggunakan fitur <button onClick="{{openBulk}}" style="padding: 0; border: none; background: transparent; font-family: inherit; font-size: 14px; line-height: 20px; font-weight: 700; color: #2B50C8; cursor: pointer;">Atur Harga Zonasi Sekaligus</button></sc-if><sc-if value="{{isAlt2}}" hint-placeholder-val="{{ false }}">Revisi Lebih mudah dengan fitur "Atur Harga Zonasi Sekaligus".</sc-if></div>
+<div style="flex-shrink: 0;">
+<button onClick="{{toggleAcc}}" aria-expanded="{{accExpanded}}" style="width: 100%; padding: 16px; display: flex; align-items: center; border: none; border-bottom: 1px solid #E2E4E8; background: #FFFFFF; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 600; color: #344054; text-align: left; cursor: pointer;"><span style="flex-grow: 1;">{{accLabel}}</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate({{accChevron}}deg);"><path d="M6 9l6 6 6-6"></path></svg></button>
+<sc-if value="{{accOpen}}" hint-placeholder-val="{{ false }}">
+<div style="margin: 0 16px 16px 16px; border: 1px solid #A8ADB7; max-height: 197px; overflow-y: auto;">
+<div style="position: sticky; top: 0; z-index: 1; display: grid; grid-template-columns: 160px minmax(0, 1fr) 300px; height: 52px; align-items: center; background: #F5F6F9; font-size: 14px; font-weight: 700;"><span style="padding: 0 14px;">Zona</span><span style="padding: 0 14px;">Cakupan Provinsi</span><span style="padding: 0 14px;">Harga Eceran Tertinggi (HET)</span></div>
+<sc-for list="{{zoneInfo}}" as="z" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) 300px; min-height: 52px; align-items: center; background: {{z.zebra}}; font-size: 14px; line-height: 20px;"><strong style="padding: 8px 14px;">{{z.label}}</strong><span style="padding: 8px 14px;">{{z.cov}}</span><strong style="padding: 8px 14px;">Maksimal {{z.het}}</strong></div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{tabZone}}" hint-placeholder-val="{{ false }}">
+<div style="position: relative; flex-shrink: 0; padding: 16px; border: 1px solid {{calloutBorder}}; border-left-width: {{calloutLeft}}; border-radius: 4px; background: {{calloutBg}}; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 20px;">
+<div style="display: flex; align-items: center;"><strong style="flex-grow: 1; font-size: 16px; line-height: 24px;">HET {{zoneLabel}} : Maksimal {{zoneHet}}</strong>
+<button onClick="{{toggleTipZone}}" onMouseEnter="{{showTipZone}}" onMouseLeave="{{hideTip}}" aria-label="Cakupan provinsi {{zoneLabel}}" style="width: 24px; height: 24px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"></path></svg></button></div>
+<sc-if value="{{tipZone}}" hint-placeholder-val="{{ false }}"><span role="tooltip" style="position: absolute; bottom: calc(100% - 44px); right: 44px; z-index: 5; width: 360px; box-sizing: border-box; padding: 12px; border-radius: 8px; background: #344054; color: #FFFFFF; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);"><span style="font-size: 14px; line-height: 20px;">Cakupan Provinsi {{zoneLabel}}</span><span style="font-size: 12px; line-height: 18px;">{{zoneCov}}</span></span></sc-if>
+<span>Gunakan Harga Eceran Tertinggi (HET) sebagai batas maksimal saat merevisi harga produk. Besarnya HET berbeda di setiap zona sesuai HPP dan biaya distribusi produk kemendikdasmen. <sc-if value="{{isAlt1}}" hint-placeholder-val="{{ true }}">Anda juga dapat revisi menggunakan fitur <button onClick="{{openBulk}}" style="padding: 0; border: none; background: transparent; font-family: inherit; font-size: 14px; line-height: 20px; font-weight: 700; color: #2B50C8; cursor: pointer;">Atur Harga Zonasi Sekaligus</button></sc-if><sc-if value="{{isAlt2}}" hint-placeholder-val="{{ false }}">Revisi Lebih mudah dengan fitur "Atur Harga Zonasi Sekaligus".</sc-if></span>
+</div>
+</sc-if>
+
+<div style="flex: 1; min-height: 120px; display: flex; flex-direction: column; border: 1px solid #A8ADB7;">
+<div style="position: relative; flex-shrink: 0; display: grid; grid-template-columns: {{cols}}; min-height: 56px; align-items: center; background: #F5F6F9; border-bottom: 1px solid #E2E4E8; font-size: 14px; line-height: 21px; font-weight: 700;">
+<span style="padding: 8px 16px; text-align: center;">No</span>
+<sc-if value="{{tabAll}}" hint-placeholder-val="{{ true }}"><button onClick="{{sortZona}}" aria-label="Urutkan berdasarkan zona" style="padding: 8px 16px; border: none; background: transparent; display: flex; align-items: center; justify-content: space-between; font-family: inherit; font-size: 14px; font-weight: 700; color: #344054; cursor: pointer;">Zona<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"></path></svg></button></sc-if>
+<button onClick="{{sortProv}}" aria-label="Urutkan berdasarkan provinsi" style="padding: 8px 16px; border: none; background: transparent; display: flex; align-items: center; justify-content: space-between; font-family: inherit; font-size: 14px; font-weight: 700; color: #344054; cursor: pointer;">Provinsi<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"></path></svg></button>
+<span style="padding: 8px 16px;">Kota/Kabupaten</span>
+<span style="padding: 8px 16px; display: flex; align-items: center; gap: 8px;">{{priceHeader}}<button onClick="{{toggleTipPrice}}" onMouseEnter="{{showTipPrice}}" onMouseLeave="{{hideTip}}" aria-label="Keterangan harga produk" style="width: 20px; height: 20px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; color: #344054; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"></path></svg></button></span>
+<span style="padding: 8px 16px;">Maks. HET</span>
+<span style="padding: 8px 16px;">Status</span>
+<sc-if value="{{tipPrice}}" hint-placeholder-val="{{ false }}"><span role="tooltip" style="position: absolute; top: -32px; left: {{tipPriceLeft}}; z-index: 5; padding: 8px 12px; border-radius: 8px; background: #344054; color: #FFFFFF; font-size: 12px; line-height: 18px; font-weight: 400; white-space: nowrap;">Harga Produk sebelum Pajak</span></sc-if>
+</div>
+<div style="flex: 1; min-height: 0; overflow-y: auto;">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: {{cols}}; min-height: 59px; align-items: center; background: {{r.zebra}}; font-size: 14px; line-height: 21px;">
+<span style="padding: 8px 16px; text-align: center;">{{r.no}}</span>
+<sc-if value="{{tabAll}}" hint-placeholder-val="{{ true }}"><span style="padding: 8px 16px;">{{r.zone}}</span></sc-if>
+<span style="padding: 8px 16px;">{{r.prov}}</span>
+<span style="padding: 8px 16px;">{{r.kab}}</span>
+<sc-if value="{{isAlt1}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 12px 16px; display: flex; flex-direction: column; gap: 4px;">
+<div style="height: 40px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid {{r.border}}; border-radius: 8px; overflow: hidden; background: #FFFFFF;"><span style="height: 100%; padding: 0 8px; display: flex; align-items: center; background: #E2E4E8; font-size: 12px; font-weight: 600; color: #818996;">Rp</span><input inputmode="numeric" aria-label="Harga produk {{r.kab}}" value="{{r.priceText}}" onChange="{{r.onChange}}" style="flex-grow: 1; min-width: 0; height: 100%; padding: 0 12px; border: none; outline: none; font-family: inherit; font-size: 14px; color: #344054; background: transparent;"></div>
+<sc-if value="{{r.showErr}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 18px; color: #F04438;">Melebihi batas HET (Maks. {{r.het}})</span></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{isAlt2}}" hint-placeholder-val="{{ false }}"><span style="padding: 8px 16px;">{{r.priceRp}}</span></sc-if>
+<span style="padding: 8px 16px;">{{r.het}}</span>
+<span style="padding: 8px 16px;"><span style="display: inline-block; padding: 0 8px; border-radius: 4px; background: {{r.chipBg}}; color: {{r.chipColor}}; font-size: 12px; line-height: 18px; font-weight: 600; white-space: nowrap;">{{r.status}}</span></span>
+</div>
+</sc-for>
+<sc-if value="{{hasMore}}" hint-placeholder-val="{{ true }}"><div style="padding: 12px 16px; border-top: 1px solid #E2E4E8; font-size: 12px; color: #818996;">{{moreText}}</div></sc-if>
+</div>
+</div>
+</div>
+
+<div style="flex-shrink: 0; padding: 24px; display: flex; align-items: center; gap: 32px;">
+<p style="flex-grow: 1; margin: 0; font-size: 14px; line-height: 20px;"><strong>{{footerStrong}}</strong> <span style="font-size: 12px; line-height: 18px; color: #818996;">{{footerRest}}</span></p>
+<div style="display: flex; gap: 16px;">
+<sc-if value="{{showTutup}}" hint-placeholder-val="{{ true }}"><button onClick="{{closeModal}}" style="height: 40px; padding: 0 12px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Tutup</button></sc-if>
+<sc-if value="{{showSamakan}}" hint-placeholder-val="{{ false }}"><button onClick="{{samakan}}" style="height: 40px; padding: 0 12px; border: 1px solid #D22B50; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #D22B50; white-space: nowrap; cursor: pointer;">{{samakanLabel}}</button></sc-if>
+<sc-if value="{{isAlt1}}" hint-placeholder-val="{{ true }}"><button onClick="{{terapkan}}" disabled="{{terapkanDisabled}}" style="min-width: 240px; height: 40px; padding: 0 16px; border: none; border-radius: 8px; background: {{terapkanBg}}; font-family: inherit; font-size: 14px; font-weight: 600; color: {{terapkanColor}}; white-space: nowrap; cursor: {{terapkanCursor}};">{{terapkanLabel}}</button></sc-if>
+<sc-if value="{{isAlt2}}" hint-placeholder-val="{{ false }}"><button onClick="{{openBulk}}" style="width: 240px; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Atur Harga Zonasi Sekaligus</button></sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isConfirm}}" hint-placeholder-val="{{ false }}">
+<div role="alertdialog" aria-modal="true" aria-labelledby="judul-konfirmasi" style="width: 528px; box-sizing: border-box; background: #FFFFFF; border-radius: 8px; box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2), 0 0 4px 0 rgba(0, 0, 0, 0.1); display: flex; flex-direction: column;">
+<div style="padding: 24px 24px 8px 24px; display: flex; flex-direction: column; gap: 8px;">
+<h2 id="judul-konfirmasi" style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 700;">Samakan harga {{cZoneLabel}} ke HET?</h2>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: #818996;">Harga produk di {{cZoneNum}} akan diubah sesuai dengan maks. HET Zona ini.</p>
+</div>
+<div style="padding: 16px 24px; display: flex; flex-direction: column; gap: 24px;">
+<div style="border: 1px solid #E2E4E8; border-radius: 8px; overflow: hidden;">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 110px 120px; height: 56px; align-items: center; background: #F5F6F9; font-size: 14px; font-weight: 700;"><span style="padding: 0 16px;">Lokasi</span><span style="padding: 0 16px;">Saat ini</span><span style="padding: 0 16px;">Menjadi</span></div>
+<div style="max-height: 240px; overflow-y: auto;">
+<sc-for list="{{cRows}}" as="c" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 110px 120px; min-height: 50px; align-items: center; background: {{c.zebra}}; font-size: 14px; line-height: 21px;"><span style="padding: 8px 16px;">{{c.kab}}</span><span style="padding: 8px 16px;">{{c.from}}</span><strong style="padding: 8px 16px; color: #039855;">{{c.to}}</strong></div>
+</sc-for>
+<div style="padding: 10px 16px; font-size: 12px; color: #818996;">{{cMore}}</div>
+</div>
+</div>
+<div style="padding: 16px; border: 1px solid #2E90FA; border-left-width: 4px; border-radius: 4px; background: #F5FAFF; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 20px;">
+<strong style="font-size: 16px; line-height: 24px;">{{cCount}} lokasi akan disamakan ke {{cHet}}</strong>
+<span>HET adalah harga maksimal. Anda tetap bisa memasang harga lebih rendah di formulir Atur Harga Zonasi.</span>
+</div>
+</div>
+<div style="padding: 0 24px 24px 24px; display: flex; gap: 16px;">
+<button onClick="{{backToTinjau}}" style="flex: 1; height: 40px; border: 1px solid #E2E4E8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #344054; cursor: pointer;">Batal</button>
+<button onClick="{{confirmSamakan}}" style="flex: 1; height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Ya, Samakan</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="judul-selesai" style="width: 528px; box-sizing: border-box; padding: 24px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2), 0 0 4px 0 rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 24px;">
+<h2 id="judul-selesai" style="margin: 0; font-size: 18px; line-height: 28px; font-weight: 700;">Semua Harga Zonasi Sudah Sesuai HET</h2>
+<p style="margin: 0; font-size: 14px; line-height: 21px;">Terimakasih sudah merevisi seluruh harga zonasi produk agar sesuai dengan Harga Eceran Tertinggi (HET). Sekarang, seluruh transaksi produk sudah dapat berjalan.</p>
+<button onClick="{{closeModal}}" style="height: 40px; border: none; border-radius: 8px; background: #D22B50; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Tutup</button>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; top: 40px; left: 50%; transform: translateX(-50%); z-index: 100; box-sizing: border-box; padding: 12px 24px; border: 1px solid {{toastBorder}}; border-radius: 8px; background: {{toastBg}}; box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.15), 0 0 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 24px; font-size: 14px; line-height: 21px; white-space: nowrap;">
+<div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: {{toastTitleSize}}; font-weight: {{toastTitleWeight}};">{{toastTitle}}</span><sc-if value="{{hasToastDesc}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #818996;">{{toastDesc}}</span></sc-if></div>
+<sc-if value="{{toastClosable}}" hint-placeholder-val="{{ false }}"><button onClick="{{closeToast}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 8px; background: #F5F6F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #2B50C8; cursor: pointer;">Tutup</button></sc-if>
+</div>
+</sc-if>
+
+</div>
+</template>
+
+<script src="https://unpkg.com/preact@10.19.3/dist/preact.min.umd.js"></script>
+<script>
+/* ---------- Runtime kecil: menjalankan template prototype dengan Preact ---------- */
+(function () {
+  var h = preact.h;
+
+  function parseText(str) {
+    var parts = [], re = /\{\{\s*([^}]+?)\s*\}\}/g, last = 0, m;
+    while ((m = re.exec(str))) {
+      if (m.index > last) parts.push(str.slice(last, m.index));
+      parts.push({ p: m[1] });
+      last = re.lastIndex;
+    }
+    if (last < str.length) parts.push(str.slice(last));
+    return parts;
+  }
+
+  var EVENT_MAP = { onclick: 'onClick', onmouseenter: 'onMouseEnter', onmouseleave: 'onMouseLeave', onfocus: 'onFocus', onblur: 'onBlur', onkeydown: 'onKeyDown' };
+
+  function compile(node) {
+    if (node.nodeType === 3) {
+      var t = node.nodeValue;
+      if (/^\s*$/.test(t) && t.indexOf('\n') >= 0) return null;
+      return { k: 'text', parts: parseText(t.replace(/\s*\n\s*/g, ' ')) };
+    }
+    if (node.nodeType !== 1) return null;
+    var tag = node.localName;
+    var kids = [];
+    node.childNodes.forEach(function (c) { var x = compile(c); if (x) kids.push(x); });
+    if (tag === 'sc-if') return { k: 'if', p: parseText(node.getAttribute('value'))[0].p, kids: kids };
+    if (tag === 'sc-for') return { k: 'for', p: parseText(node.getAttribute('list'))[0].p, as: node.getAttribute('as'), kids: kids };
+    var attrs = [];
+    for (var i = 0; i < node.attributes.length; i++) {
+      var a = node.attributes[i], name = a.name;
+      if (name.indexOf('hint-') === 0) continue;
+      var lower = name.toLowerCase();
+      if (lower === 'onchange') name = tag === 'input' ? 'onInput' : 'onChange';
+      else if (EVENT_MAP[lower]) name = EVENT_MAP[lower];
+      var parts = parseText(a.value);
+      var raw = parts.length === 1 && typeof parts[0] === 'object';
+      attrs.push({ n: name, parts: parts, raw: raw });
+    }
+    return { k: 'el', tag: tag, attrs: attrs, kids: kids };
+  }
+
+  function lookup(path, scope) {
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var segs = path.split('.'), v = scope;
+    for (var i = 0; i < segs.length; i++) { if (v == null) return undefined; v = v[segs[i]]; }
+    return v;
+  }
+  function interp(parts, scope) {
+    return parts.map(function (x) { if (typeof x === 'string') return x; var v = lookup(x.p, scope); return v == null ? '' : String(v); }).join('');
+  }
+
+  function build(c, scope, out) {
+    if (c.k === 'text') { out.push(interp(c.parts, scope)); return; }
+    if (c.k === 'if') { if (lookup(c.p, scope)) c.kids.forEach(function (k) { build(k, scope, out); }); return; }
+    if (c.k === 'for') {
+      var list = lookup(c.p, scope) || [];
+      list.forEach(function (item, i) {
+        var s = Object.create(scope); s[c.as] = item; s.$index = i;
+        c.kids.forEach(function (k) { build(k, s, out); });
+      });
+      return;
+    }
+    var props = {};
+    c.attrs.forEach(function (a) {
+      var v = a.raw ? lookup(a.parts[0].p, scope) : interp(a.parts, scope);
+      if (a.n === 'disabled') { if (v === true || v === 'true' || v === '') props.disabled = true; return; }
+      props[a.n] = v;
+    });
+    var kids = [];
+    c.kids.forEach(function (k) { build(k, scope, kids); });
+    out.push(h.apply(null, [c.tag, props].concat(kids)));
+  }
+
+  var tplRoot = document.getElementById('tpl').content;
+  var compiled = [];
+  tplRoot.childNodes.forEach(function (n) { var x = compile(n); if (x) compiled.push(x); });
+
+  var params = new URLSearchParams(location.search);
+  var alt = params.get('alt') === '2' ? '2' : '1';
+  var SIM = { 'unduh-gagal': 'unduh template gagal', 'unggah-format': 'unggah gagal: format', 'unggah-aturan': 'unggah gagal: aturan pengisian', 'unggah-ukuran': 'unggah gagal: ukuran' };
+  var simulasi = SIM[params.get('simulasi')] || 'semua berhasil';
+  document.getElementById(alt === '2' ? 'sw2' : 'sw1').setAttribute('aria-current', 'page');
+  ['sw1', 'sw2'].forEach(function (id) {
+    var el = document.getElementById(id);
+    var q = new URLSearchParams(location.search); q.set('alt', id === 'sw2' ? '2' : '1');
+    el.setAttribute('href', '?' + q.toString());
+  });
+
+  var stage = document.getElementById('stage');
+  var scheduled = false, comp;
+  function render() {
+    scheduled = false;
+    var vals = comp.renderVals();
+    var out = [];
+    compiled.forEach(function (c) { build(c, vals, out); });
+    preact.render(h.apply(null, [preact.Fragment, null].concat(out)), stage);
+  }
+  window.DCLogic = function DCLogic(props) { this.props = props; this.state = {}; };
+  window.DCLogic.prototype.setState = function (patch) {
+    Object.assign(this.state, typeof patch === 'function' ? patch(this.state) : patch);
+    if (!scheduled) { scheduled = true; Promise.resolve().then(render); }
+  };
+  window.__mountPrototype = function (Component) {
+    comp = new Component({ variant: alt, simulasi: simulasi });
+    render();
+  };
+
+  function fit() {
+    var s = Math.min(window.innerWidth / 1440, window.innerHeight / 1024);
+    var x = Math.max(0, (window.innerWidth - 1440 * s) / 2), y = Math.max(0, (window.innerHeight - 1024 * s) / 2);
+    stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();
+</script>
+<script>
+/* ---------- Logika prototype ---------- */
+class Component extends DCLogic {
+  constructor(props) { super(props); }
+  componentWillUnmount() {
+    if (this._up) clearInterval(this._up);
+    if (this._toast) clearTimeout(this._toast);
+  }
+  renderVals() {
+    var self = this;
+    var s = this.state || {};
+    var variant = String(this.props.variant ?? '1') === '2' ? '2' : '1';
+    var sim = this.props.simulasi ?? 'semua berhasil';
+    var alt1 = variant === '1';
+
+    var screen = s.screen ?? 'zonasi';
+    var uploaded = s.uploaded ?? false;
+    var price = s.price ?? null;
+    var zoneAll = s.zoneAll ?? {};
+    var gOpen = s.gOpen ?? null;
+    var modal = s.modal ?? null;
+    var step = s.step ?? 1;
+    var up = s.up ?? 'idle';
+    var progress = s.progress ?? 0;
+    var tab = s.tab ?? 'all';
+    var acc = s.acc ?? false;
+    var sort = s.sort ?? null;
+    var tip = s.tip ?? null;
+    var draft = s.draft ?? {};
+    var touched = s.touched ?? {};
+    var draftAll = s.draftAll ?? {};
+    var cZone = s.cZone ?? null;
+    var toast = s.toast ?? null;
+    var savedOk = s.savedOk ?? false;
+    var chipTip = s.chipTip ?? null;
+
+    var ZONES = [
+      { k: 'I', label: 'Zona I', het: 45000, cov: 'Jawa, Banten' },
+      { k: 'II', label: 'Zona II', het: 50000, cov: 'Bali, Nusa Tenggara Barat, Lampung, Sumatera Selatan' },
+      { k: 'III', label: 'Zona III', het: 55000, cov: 'Bengkulu, Jambi, Bangka Belitung, Sumatera Barat, Riau, Sumatera Utara' },
+      { k: 'IV', label: 'Zona IV', het: 57000, cov: 'Aceh, Kepulauan Riau, Nusa Tenggara Timur, Kalimantan, Sulawesi' },
+      { k: 'V-A', label: 'Zona V-A', het: 56000, cov: 'Wilayah 3T di dalam cakupan Zona II, III, dan IV.' },
+      { k: 'V-B', label: 'Zona V-B', het: 58000, cov: 'Maluku, Maluku Utara, Papua, Papua Barat' }
+    ];
+    var ZM = {}; ZONES.forEach(function (z) { ZM[z.k] = z; });
+    if (!this._loc) {
+      /* Kabupaten ditulis tanpa awalan; kota diawali "Kota ". */
+      var DATA = {
+        'I': [
+          ['Jawa Barat', 'Bandung|Bandung Barat|Bekasi|Bogor|Ciamis|Cianjur|Cirebon|Garut|Indramayu|Karawang|Kuningan|Majalengka|Pangandaran|Purwakarta|Subang|Sukabumi|Sumedang|Tasikmalaya|Kota Bandung|Kota Banjar|Kota Bekasi|Kota Bogor|Kota Cimahi|Kota Cirebon|Kota Depok|Kota Sukabumi|Kota Tasikmalaya'],
+          ['Jawa Tengah', 'Banjarnegara|Banyumas|Batang|Blora|Boyolali|Brebes|Cilacap|Demak|Grobogan|Jepara|Karanganyar|Kebumen|Kendal|Klaten|Kudus|Magelang|Pati|Pekalongan|Pemalang|Purbalingga|Purworejo|Rembang|Semarang|Sragen|Sukoharjo|Tegal|Temanggung|Wonogiri|Wonosobo|Kota Magelang|Kota Pekalongan|Kota Salatiga|Kota Semarang|Kota Surakarta|Kota Tegal'],
+          ['Jawa Timur', 'Bangkalan|Banyuwangi|Blitar|Bojonegoro|Bondowoso|Gresik|Jember|Jombang|Kediri|Lamongan|Lumajang|Madiun|Magetan|Malang|Mojokerto|Nganjuk|Ngawi|Pacitan|Pamekasan|Pasuruan|Ponorogo|Probolinggo|Sampang|Sidoarjo|Situbondo|Sumenep|Trenggalek|Tuban|Tulungagung|Kota Batu|Kota Blitar|Kota Kediri|Kota Madiun|Kota Malang|Kota Mojokerto|Kota Pasuruan|Kota Probolinggo|Kota Surabaya'],
+          ['Daerah Istimewa Yogyakarta', 'Bantul|Gunungkidul|Kulon Progo|Sleman|Kota Yogyakarta'],
+          ['DKI Jakarta', 'Kepulauan Seribu|Kota Jakarta Barat|Kota Jakarta Pusat|Kota Jakarta Selatan|Kota Jakarta Timur|Kota Jakarta Utara'],
+          ['Banten', 'Lebak|Pandeglang|Serang|Tangerang|Kota Cilegon|Kota Serang|Kota Tangerang|Kota Tangerang Selatan']
+        ],
+        'II': [
+          ['Bali', 'Badung|Bangli|Buleleng|Gianyar|Jembrana|Karangasem|Klungkung|Tabanan|Kota Denpasar'],
+          ['Nusa Tenggara Barat', 'Bima|Dompu|Lombok Barat|Lombok Tengah|Lombok Timur|Lombok Utara|Sumbawa|Sumbawa Barat|Kota Bima|Kota Mataram'],
+          ['Lampung', 'Lampung Barat|Lampung Selatan|Lampung Tengah|Lampung Timur|Lampung Utara|Mesuji|Pesawaran|Pringsewu|Tanggamus|Tulang Bawang|Tulang Bawang Barat|Way Kanan|Kota Bandar Lampung|Kota Metro'],
+          ['Sumatera Selatan', 'Banyuasin|Empat Lawang|Lahat|Muara Enim|Musi Banyuasin|Musi Rawas|Musi Rawas Utara|Ogan Ilir|Ogan Komering Ilir|Ogan Komering Ulu|Ogan Komering Ulu Selatan|Ogan Komering Ulu Timur|Penukal Abab Lematang Ilir|Kota Lubuklinggau|Kota Pagar Alam|Kota Palembang|Kota Prabumulih']
+        ],
+        'III': [
+          ['Bengkulu', 'Bengkulu Selatan|Bengkulu Tengah|Bengkulu Utara|Kaur|Kepahiang|Lebong|Mukomuko|Rejang Lebong|Seluma|Kota Bengkulu'],
+          ['Jambi', 'Batanghari|Bungo|Kerinci|Merangin|Muaro Jambi|Sarolangun|Tanjung Jabung Barat|Tanjung Jabung Timur|Tebo|Kota Jambi|Kota Sungai Penuh'],
+          ['Bangka Belitung', 'Bangka|Bangka Barat|Bangka Selatan|Bangka Tengah|Belitung|Belitung Timur|Kota Pangkalpinang'],
+          ['Sumatera Barat', 'Agam|Dharmasraya|Lima Puluh Kota|Padang Pariaman|Pasaman|Pasaman Barat|Pesisir Selatan|Sijunjung|Solok|Tanah Datar|Kota Bukittinggi|Kota Padang|Kota Padang Panjang|Kota Pariaman|Kota Payakumbuh|Kota Sawahlunto|Kota Solok'],
+          ['Riau', 'Indragiri Hilir|Indragiri Hulu|Kampar|Kuantan Singingi|Pelalawan|Rokan Hilir|Rokan Hulu|Siak|Kota Dumai|Kota Pekanbaru'],
+          ['Sumatera Utara', 'Asahan|Batu Bara|Dairi|Deli Serdang|Humbang Hasundutan|Karo|Labuhanbatu|Labuhanbatu Selatan|Labuhanbatu Utara|Langkat|Mandailing Natal|Padang Lawas|Padang Lawas Utara|Pakpak Bharat|Samosir|Serdang Bedagai|Simalungun|Tapanuli Selatan|Tapanuli Tengah|Tapanuli Utara|Toba|Kota Binjai|Kota Gunungsitoli|Kota Medan|Kota Padangsidimpuan|Kota Pematangsiantar|Kota Sibolga|Kota Tanjungbalai|Kota Tebing Tinggi'],
+          ['Sulawesi Selatan', 'Bantaeng|Barru|Bone|Bulukumba|Enrekang|Gowa|Jeneponto|Kepulauan Selayar|Luwu|Luwu Timur|Luwu Utara|Maros|Pangkajene dan Kepulauan|Pinrang|Sidenreng Rappang|Sinjai|Soppeng|Takalar|Tana Toraja|Toraja Utara|Wajo|Kota Makassar|Kota Palopo|Kota Parepare'],
+          ['Sulawesi Utara', 'Bolaang Mongondow|Bolaang Mongondow Selatan|Bolaang Mongondow Timur|Bolaang Mongondow Utara|Kepulauan Siau Tagulandang Biaro|Minahasa|Minahasa Selatan|Minahasa Tenggara|Minahasa Utara|Kota Bitung|Kota Kotamobagu|Kota Manado|Kota Tomohon'],
+          ['Sulawesi Tengah', 'Banggai|Buol|Donggala|Morowali|Morowali Utara|Parigi Moutong|Poso|Tolitoli|Kota Palu'],
+          ['Sulawesi Barat', 'Majene|Mamasa|Mamuju|Mamuju Tengah|Pasangkayu|Polewali Mandar'],
+          ['Sulawesi Tenggara', 'Buton|Buton Selatan|Buton Tengah|Buton Utara|Kolaka|Kolaka Timur|Kolaka Utara|Konawe Selatan|Konawe Utara|Muna|Muna Barat|Wakatobi|Kota Baubau|Kota Kendari'],
+          ['Gorontalo', 'Boalemo|Bone Bolango|Gorontalo|Gorontalo Utara|Pohuwato|Kota Gorontalo']
+        ],
+        'IV': [
+          ['Nanggroe Aceh Darussalam', 'Aceh Barat|Aceh Barat Daya|Aceh Jaya|Aceh Selatan|Aceh Tamiang|Aceh Tengah|Aceh Tenggara|Aceh Timur|Aceh Utara|Bener Meriah|Bireuen|Gayo Lues|Nagan Raya|Pidie|Pidie Jaya|Simeulue|Kota Banda Aceh|Kota Langsa|Kota Lhokseumawe|Kota Sabang|Kota Subulussalam'],
+          ['Kepulauan Riau', 'Bintan|Lingga|Kota Batam|Kota Tanjungpinang'],
+          ['Nusa Tenggara Timur', 'Flores Timur|Kupang|Ngada|Sikka|Timor Tengah Utara|Kota Kupang'],
+          ['Kalimantan Barat', 'Bengkayang|Kayong Utara|Ketapang|Kubu Raya|Landak|Melawi|Mempawah|Sambas|Sekadau|Sintang|Kota Pontianak|Kota Singkawang'],
+          ['Kalimantan Selatan', 'Balangan|Banjar|Barito Kuala|Hulu Sungai Selatan|Hulu Sungai Tengah|Hulu Sungai Utara|Kotabaru|Tabalong|Tanah Bumbu|Tanah Laut|Tapin|Kota Banjarbaru|Kota Banjarmasin'],
+          ['Kalimantan Tengah', 'Barito Selatan|Barito Timur|Barito Utara|Gunung Mas|Kapuas|Katingan|Kotawaringin Barat|Kotawaringin Timur|Lamandau|Murung Raya|Pulang Pisau|Seruyan|Sukamara|Kota Palangka Raya'],
+          ['Kalimantan Timur', 'Kutai Barat|Kutai Kartanegara|Kutai Timur|Paser|Penajam Paser Utara|Kota Balikpapan|Kota Bontang|Kota Samarinda'],
+          ['Kalimantan Utara', 'Bulungan|Tana Tidung|Kota Tarakan']
+        ],
+        'V-A': [
+          ['Nanggroe Aceh Darussalam', 'Aceh Besar|Aceh Singkil'],
+          ['Sumatera Utara', 'Nias|Nias Selatan|Nias Utara|Nias Barat'],
+          ['Sumatera Barat', 'Kepulauan Mentawai|Solok Selatan'],
+          ['Lampung', 'Pesisir Barat'],
+          ['Nusa Tenggara Timur', 'Sumba Barat|Sumba Timur|Timor Tengah Selatan|Belu|Alor|Lembata|Ende|Manggarai|Rote Ndao|Manggarai Barat|Sumba Tengah|Sumba Barat Daya|Nagekeo|Manggarai Timur|Sabu Raijua|Malaka'],
+          ['Sulawesi Tengah', 'Banggai Kepulauan|Tojo Una-Una|Sigi|Banggai Laut'],
+          ['Sulawesi Tenggara', 'Konawe|Bombana|Konawe Kepulauan'],
+          ['Riau', 'Bengkalis|Kepulauan Meranti'],
+          ['Kepulauan Riau', 'Karimun|Kepulauan Anambas|Natuna'],
+          ['Kalimantan Barat', 'Kapuas Hulu|Sanggau'],
+          ['Kalimantan Timur', 'Mahakam Hulu|Berau'],
+          ['Kalimantan Utara', 'Nunukan|Malinau'],
+          ['Sulawesi Utara', 'Kepulauan Sangihe|Kepulauan Talaud']
+        ],
+        'V-B': [
+          ['Maluku', 'Buru|Buru Selatan|Kepulauan Aru|Kepulauan Tanimbar|Maluku Barat Daya|Maluku Tengah|Maluku Tenggara|Seram Bagian Barat|Seram Bagian Timur|Kota Ambon|Kota Tual'],
+          ['Maluku Utara', 'Halmahera Barat|Halmahera Selatan|Halmahera Tengah|Halmahera Timur|Halmahera Utara|Kepulauan Sula|Pulau Morotai|Pulau Taliabu|Kota Ternate|Kota Tidore Kepulauan'],
+          ['Papua', 'Biak Numfor|Jayapura|Keerom|Kepulauan Yapen|Mamberamo Raya|Sarmi|Supiori|Waropen|Kota Jayapura'],
+          ['Papua Barat', 'Fakfak|Kaimana|Manokwari|Manokwari Selatan|Pegunungan Arfak|Teluk Bintuni|Teluk Wondama'],
+          ['Papua Barat Daya', 'Maybrat|Raja Ampat|Sorong|Sorong Selatan|Tambrauw|Kota Sorong'],
+          ['Papua Selatan', 'Asmat|Boven Digoel|Mappi|Merauke'],
+          ['Papua Tengah', 'Deiyai|Dogiyai|Intan Jaya|Mimika|Nabire|Paniai|Puncak|Puncak Jaya'],
+          ['Papua Pegunungan', 'Jayawijaya|Lanny Jaya|Mamberamo Tengah|Nduga|Pegunungan Bintang|Tolikara|Yahukimo|Yalimo']
+        ]
+      };
+      var built = []; var n = 0;
+      ['I', 'II', 'III', 'IV', 'V-A', 'V-B'].forEach(function (zk) {
+        DATA[zk].forEach(function (pr) {
+          pr[1].split('|').forEach(function (c) {
+            n += 1;
+            built.push(['L' + n, zk, pr[0], c.indexOf('Kota ') === 0 ? c : 'Kab. ' + c, 150000]);
+          });
+        });
+      });
+      this._loc = built;
+    }
+    var LOC = this._loc;
+    var TOTAL = LOC.length;
+    var dots = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+    var rp = function (n) { return n === '' || n === undefined ? '-' : 'Rp' + dots(n); };
+    var digitsOf = function (v) { var d = String(v).replace(/\D/g, ''); return d === '' ? '' : parseInt(d, 10); };
+    var pBase = {}; LOC.forEach(function (l) { pBase[l[0]] = l[4]; });
+    var P = price || pBase;
+    var okIn = function (l, pm) { var p = pm[l[0]]; return p !== '' && p <= ZM[l[1]].het; };
+    var sampleOf = function (k) { return LOC.filter(function (l) { return l[1] === k; }); };
+    var openZ = function (k, pm, za) {
+      var smp = sampleOf(k); var okc = smp.filter(function (l) { return okIn(l, pm); }).length;
+      return smp.length - okc;
+    };
+    var openAllOf = function (pm, za) { var t = 0; ZONES.forEach(function (z) { t += openZ(z.k, pm, za); }); return t; };
+    var openAll = openAllOf(P, zoneAll);
+
+    var showToast = function (t) {
+      if (self._toast) clearTimeout(self._toast);
+      self.setState({ toast: t });
+      self._toast = setTimeout(function () { self.setState({ toast: null }); }, t.kind === 'card' ? 6000 : 3500);
+    };
+
+    /* ---------- halaman Atur Harga Zonasi ---------- */
+    var provs = [];
+    LOC.forEach(function (l) { if (provs.indexOf(l[2]) < 0) provs.push(l[2]); });
+    var openMap = gOpen || (function () { var m = {}; provs.forEach(function (pv) { m[pv] = true; }); return m; })();
+    var groups = provs.map(function (pv) {
+      var isOpen = !!openMap[pv];
+      var list = LOC.filter(function (l) { return l[2] === pv; });
+      var first = P[list[0][0]];
+      return {
+        prov: pv, open: isOpen, expanded: isOpen ? 'true' : 'false', chevron: isOpen ? 180 : 0,
+        cbBg: isOpen ? '#2B50C8' : '#FFFFFF', cbBorder: isOpen ? '#FFFFFF' : '#A8ADB7',
+        provPrice: first !== '' ? dots(first) : 'Harga',
+        provTax: first !== '' ? dots(Math.round(first * 1.06)) : '0',
+        toggle: function () { var m = Object.assign({}, openMap); m[pv] = !isOpen; self.setState({ gOpen: m }); },
+        rows: list.map(function (l) {
+          var p = P[l[0]]; var het = ZM[l[1]].het; var bad = uploaded && !(p !== '' && p <= het);
+          return {
+            id: l[0], kab: l[3].replace(/^Kab\. /, 'Kabupaten '), zone: ZM[l[1]].label, priceText: p === '' ? '' : dots(p),
+            tipOpen: chipTip === l[0],
+            showTip: function () { self.setState({ chipTip: l[0] }); },
+            hideTip: function () { self.setState({ chipTip: null }); },
+            toggleTip: function () { self.setState({ chipTip: chipTip === l[0] ? null : l[0] }); },
+            taxText: p === '' ? '0' : dots(Math.round(p * 1.06)),
+            border: bad ? '#F04438' : '#A8ADB7',
+            helper: bad ? 'Melebihi batas HET (Maks. ' + rp(het) + ')' : 'Harga maks (HET) : ' + rp(het),
+            helperColor: bad ? '#F04438' : '#344054',
+            onChange: function (e) { var n = Object.assign({}, P); n[l[0]] = digitsOf(e.target.value); self.setState({ price: n }); }
+          };
+        })
+      };
+    });
+    var columns = [{ groups: groups.filter(function (g, i) { return i % 2 === 0; }) }, { groups: groups.filter(function (g, i) { return i % 2 === 1; }) }];
+
+    /* ---------- modal Atur Harga Zonasi Sekaligus ---------- */
+    var upErrMap = {
+      'unggah gagal: format': 'Dokumen gagal diunggah karena format tidak sesuai.',
+      'unggah gagal: aturan pengisian': 'Dokumen gagal diunggah karena pengaturan pengisian tidak sesuai ketentuan.',
+      'unggah gagal: ukuran': 'Dokumen gagal diunggah karena ukuran melebihi batas maksimal 50 MB.'
+    };
+    var startUpload = function () {
+      if (self._up) clearInterval(self._up);
+      var pct = 0;
+      self.setState({ up: 'loading', progress: 0 });
+      self._up = setInterval(function () {
+        pct += 10;
+        if (pct >= 100) {
+          clearInterval(self._up); self._up = null;
+          self.setState({ up: upErrMap[sim] ? 'error' : 'done', progress: 100 });
+        } else self.setState({ progress: pct });
+      }, 160);
+    };
+    var openBulk = function () { self.setState({ modal: 'bulk', step: 1, up: 'idle', progress: 0, tip: null }); };
+
+    /* ---------- modal Tinjau ---------- */
+    var visibleZones = ZONES.filter(function (z) { return openZ(z.k, P, zoneAll) > 0; });
+    var curTab = (tab !== 'all' && visibleZones.filter(function (z) { return z.k === tab; }).length === 0) ? 'all' : tab;
+    var isAll = curTab === 'all';
+    var DM = Object.assign({}, P, draft);
+    var draftZA = Object.assign({}, zoneAll, draftAll);
+    var doneDraft = TOTAL - openAllOf(DM, draftZA);
+    var revCount = Object.keys(draft).filter(function (id) { return draft[id] !== P[id]; }).length;
+
+    var tabs = [{ k: 'all', label: 'Semua', count: openAll }].concat(visibleZones.map(function (z) { return { k: z.k, label: z.label, count: openZ(z.k, P, zoneAll) }; })).map(function (t) {
+      var on = t.k === curTab;
+      return {
+        text: on ? t.label : t.label + ' (' + t.count + ')', count: t.count, active: on,
+        selected: on ? 'true' : 'false', line: on ? '#D22B50' : 'transparent',
+        weight: on ? 600 : 400, color: on ? '#344054' : '#818996',
+        select: function () { self.setState({ tab: t.k, tip: null }); }
+      };
+    });
+
+    var rowsSrc = (isAll ? LOC.filter(function (l) { return visibleZones.some(function (z) { return z.k === l[1]; }); }) : sampleOf(curTab)).filter(function (l) { return !okIn(l, P); });
+    if (sort) {
+      rowsSrc = rowsSrc.slice().sort(function (a, b) {
+        var ka = sort.key === 'zona' ? ZONES.indexOf(ZM[a[1]]) : a[2];
+        var kb = sort.key === 'zona' ? ZONES.indexOf(ZM[b[1]]) : b[2];
+        var c = ka < kb ? -1 : (ka > kb ? 1 : 0);
+        return sort.asc ? c : -c;
+      });
+    }
+    var rows = rowsSrc.map(function (l, i) {
+      var het = ZM[l[1]].het;
+      var p = alt1 ? DM[l[0]] : P[l[0]];
+      var ok = p !== '' && p <= het;
+      var t = !!touched[l[0]];
+      return {
+        no: i + 1, zone: ZM[l[1]].label, prov: l[2], kab: l[3],
+        priceText: p === '' ? '' : dots(p), priceRp: rp(p), het: rp(het),
+        border: ok && t ? '#039855' : (t ? '#F04438' : '#A8ADB7'),
+        showErr: t && !ok,
+        status: ok ? 'Sesuai' : 'Melebihi HET',
+        chipBg: ok ? '#F6FEF9' : '#FFFAFA', chipColor: ok ? '#039855' : '#F04438',
+        zebra: i % 2 ? '#F5F6F9' : '#FFFFFF',
+        onChange: function (e) {
+          var d = Object.assign({}, draft); d[l[0]] = digitsOf(e.target.value);
+          var tt = Object.assign({}, touched); tt[l[0]] = true;
+          self.setState({ draft: d, touched: tt });
+        }
+      };
+    });
+    var openInView = isAll ? openAll : openZ(curTab, P, zoneAll);
+    var shownOpen = rowsSrc.filter(function (l) { return !okIn(l, P); }).length;
+    var moreN = openInView - shownOpen;
+    var zoneOpenNow = isAll ? 0 : openZ(curTab, P, zoneAll);
+
+    var finishIfDone = function (newP, newZA, msg) {
+      var remain = openAllOf(newP, newZA);
+      var patch = { price: newP, zoneAll: newZA, draft: {}, touched: {}, draftAll: {} };
+      if (remain === 0) { patch.modal = 'done'; patch.tab = 'all'; }
+      self.setState(patch);
+      showToast({ kind: 'ok', title: msg });
+    };
+
+    var cz = cZone ? ZM[cZone] : null;
+    var cSample = cz ? sampleOf(cZone).filter(function (l) { return !okIn(l, P); }) : [];
+
+    var t = toast;
+    var tk = t ? t.kind : '';
+    return {
+      yes: true,
+      isZonasi: screen === 'zonasi', isProduk: screen === 'produk', savedOk: savedOk,
+      showBanner: uploaded && openAll > 0, openAll: openAll,
+      selectAllLabel: uploaded ? 'Pilih Semua Kota/Provinsi (' + TOTAL + ' Kota/Kabupaten)' : 'Pilih Semua Kota/Provinsi',
+      columns: columns,
+      goProduk: function () { self.setState({ screen: 'produk' }); },
+      goZonasi: function () { self.setState({ screen: 'zonasi' }); },
+      savePage: function () {
+        if (uploaded && openAll > 0) showToast({ kind: 'err', title: 'Gagal Menyimpan Harga Zonasi', desc: 'Masih ada ' + openAll + ' lokasi yang melebihi HET. Tinjau harga zonasi terlebih dahulu.' });
+        else self.setState({ screen: 'produk', savedOk: true });
+      },
+      openBulk: openBulk,
+      openTinjau: function () { self.setState({ modal: 'tinjau', tab: 'all', acc: false, draft: {}, touched: {}, draftAll: {}, tip: null, sort: null }); },
+      showOverlay: !!modal,
+      isBulk: modal === 'bulk', isTinjau: modal === 'tinjau', isConfirm: modal === 'confirm', isDone: modal === 'done',
+      closeModal: function () { if (self._up) { clearInterval(self._up); self._up = null; } self.setState({ modal: null, tip: null }); },
+
+      isStep1: step === 1, isStep2: step === 2,
+      stepLine: step === 2 ? '#2B50C8' : 'linear-gradient(90deg, #2B50C8 55%, #E2E4E8 55%)',
+      step2Ring: step === 2 ? '#2B50C8' : '#E2E4E8',
+      zoneInfo: ZONES.map(function (z, i) { return { label: z.label, cov: z.cov, het: rp(z.het), zebra: i % 2 ? '#F5F6F9' : '#FFFFFF' }; }),
+      downloadTemplate: function () {
+        if (sim === 'unduh template gagal') showToast({ kind: 'err', title: 'Gagal Memproses Berkas', desc: 'Terjadi kesalahan dalam memproses berkas. Silakan coba lagi nanti.' });
+        else showToast({ kind: 'ok', title: 'Template dokumen pengaturan Atur Harga Zonasi Sekaligus berhasil diunduh', plain: true });
+      },
+      toStep2: function () { self.setState({ step: 2 }); },
+      toStep1: function () { if (self._up) { clearInterval(self._up); self._up = null; } self.setState({ step: 1, up: 'idle', progress: 0 }); },
+      uploadLabel: up === 'idle' ? 'Unggah dokumen template' : 'Unggah Dokumen yang sudah diisi disini',
+      upIdle: up === 'idle', upLoading: up === 'loading', upDone: up === 'done', upError: up === 'error',
+      upErrorText: upErrMap[sim] || '', progress: progress,
+      startUpload: startUpload,
+      cancelUpload: function () { if (self._up) { clearInterval(self._up); self._up = null; } self.setState({ up: 'idle', progress: 0 }); },
+      removeFile: function () { self.setState({ up: 'idle', progress: 0 }); },
+      saveUpload: function () {
+        if (up !== 'done') return;
+        self.setState({ modal: null, uploaded: true, price: Object.assign({}, pBase), zoneAll: {}, screen: 'zonasi', savedOk: false });
+        showToast({ kind: 'card', title: 'Berkas Berhasil Diunggah', desc: 'Pengaturan harga zonasi sekaligus berhasil ditambahkan' });
+      },
+
+      isAlt1: alt1, isAlt2: !alt1,
+      tabs: tabs, tabAll: isAll, tabZone: !isAll,
+      calloutBg: alt1 ? '#F5F6F9' : '#F5FAFF', calloutBorder: alt1 ? '#E2E4E8' : '#2E90FA', calloutLeft: alt1 ? '1px' : '4px',
+      accOpen: acc, accExpanded: acc ? 'true' : 'false', accChevron: acc ? 180 : 0,
+      modalH: isAll && acc ? '830px' : '768px',
+      accLabel: acc ? 'Sembunyikan pembagian zona' : 'Lihat pembagian 6 zona dan wilayahnya',
+      toggleAcc: function () { self.setState({ acc: !acc }); },
+      zoneLabel: isAll ? '' : ZM[curTab].label, zoneHet: isAll ? '' : rp(ZM[curTab].het), zoneCov: isAll ? '' : ZM[curTab].cov,
+      tipZone: tip === 'zone', tipPrice: tip === 'price',
+      toggleTipZone: function () { self.setState({ tip: tip === 'zone' ? null : 'zone' }); },
+      toggleTipPrice: function () { self.setState({ tip: tip === 'price' ? null : 'price' }); },
+      showTipZone: function () { self.setState({ tip: 'zone' }); },
+      showTipPrice: function () { self.setState({ tip: 'price' }); },
+      hideTip: function () { self.setState({ tip: null }); },
+      tipPriceLeft: isAll ? (alt1 ? '440px' : '420px') : (alt1 ? '400px' : '380px'),
+      cols: isAll ? (alt1 ? '64px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 221px minmax(0, 1fr) minmax(0, 1fr)' : '64px repeat(6, minmax(0, 1fr))') : (alt1 ? '64px minmax(0, 1fr) minmax(0, 1fr) 240px minmax(0, 1fr) minmax(0, 1fr)' : '64px repeat(5, minmax(0, 1fr))'),
+      priceHeader: (!alt1 && !isAll) ? 'Harga Produk saat ini' : 'Harga Produk',
+      sortZona: function () { self.setState({ sort: { key: 'zona', asc: !(sort && sort.key === 'zona' && sort.asc) } }); },
+      sortProv: function () { self.setState({ sort: { key: 'prov', asc: !(sort && sort.key === 'prov' && sort.asc) } }); },
+      rows: rows,
+      hasMore: moreN > 0,
+      moreText: 'Menampilkan ' + rows.length + ' contoh lokasi · ' + moreN + ' lokasi lainnya melebihi HET',
+      footerStrong: alt1 ? doneDraft + ' dari ' + TOTAL + ' Lokasi' : 'Total ' + openAll + ' Lokasi',
+      footerRest: alt1 ? 'sudah sesuai HET' : 'belum sesuai HET',
+      showTutup: isAll,
+      showSamakan: !isAll && zoneOpenNow > 0,
+      samakanLabel: isAll ? '' : 'Samakan ' + zoneOpenNow + ' Lokasi ' + ZM[curTab].label + ' sesuai Maks. HET',
+      samakan: function () {
+        if (isAll) return;
+        var z = ZM[curTab];
+        if (alt1) {
+          var d = Object.assign({}, draft), tt = Object.assign({}, touched);
+          sampleOf(z.k).forEach(function (l) { d[l[0]] = z.het; tt[l[0]] = true; });
+          var da = Object.assign({}, draftAll); da[z.k] = true;
+          self.setState({ draft: d, touched: tt, draftAll: da });
+          showToast({ kind: 'ok', title: 'Berhasil Menerapkan Kolom Zona ' + ({ I: '1', II: '2', III: '3', IV: '4', 'V-A': 'V-A', 'V-B': 'V-B' })[z.k] + ' sesuai Maks. HET' });
+        } else {
+          self.setState({ modal: 'confirm', cZone: z.k, tip: null });
+        }
+      },
+      terapkanLabel: revCount > 0 ? 'Terapkan ' + revCount + ' Revisi Harga Zonasi' : 'Terapkan Revisi Harga Zonasi',
+      terapkanDisabled: revCount === 0,
+      terapkanBg: revCount > 0 ? '#D22B50' : '#F1F3F7',
+      terapkanColor: revCount > 0 ? '#FFFFFF' : '#6B7080',
+      terapkanCursor: revCount > 0 ? 'pointer' : 'not-allowed',
+      terapkan: function () {
+        if (Object.keys(draft).length === 0 && Object.keys(draftAll).length === 0) { showToast({ kind: 'err', title: 'Belum ada perubahan harga', desc: 'Ubah harga produk atau samakan dengan HET terlebih dahulu.' }); return; }
+        finishIfDone(DM, draftZA, 'Berhasil Menerapkan perubahan harga zonasi produk.');
+      },
+
+      cZoneLabel: cz ? cz.label : '', cHet: cz ? rp(cz.het) : '',
+      cZoneNum: cz ? 'Zona ' + ({ I: '1', II: '2', III: '3', IV: '4', 'V-A': 'V-A', 'V-B': 'V-B' })[cz.k] : '',
+      cCount: cz ? openZ(cZone, P, zoneAll) : 0,
+      cRows: cSample.map(function (l, i) { return { kab: l[3] + ', ' + l[2], from: rp(P[l[0]]), to: rp(cz.het), zebra: i % 2 ? '#F5F6F9' : '#FFFFFF' }; }),
+      cMore: cz ? cSample.length + ' lokasi di ' + cz.label + ' akan disesuaikan' : '',
+      backToTinjau: function () { self.setState({ modal: 'tinjau' }); },
+      confirmSamakan: function () {
+        var n = Object.assign({}, P); sampleOf(cZone).forEach(function (l) { n[l[0]] = cz.het; });
+        var za = Object.assign({}, zoneAll); za[cZone] = true;
+        self.setState({ modal: 'tinjau', tab: 'all' });
+        finishIfDone(n, za, 'Berhasil Menerapkan perubahan harga zonasi produk');
+      },
+
+      hasToast: !!t,
+      toastBg: tk === 'err' ? '#FEE4E2' : (tk === 'card' ? '#FFFFFF' : '#ECFDF3'),
+      toastBorder: tk === 'err' ? '#FECDCA' : (tk === 'card' ? '#E2E4E8' : '#D1FADF'),
+      toastTitle: t ? t.title : '', toastDesc: t && t.desc ? t.desc : '', hasToastDesc: !!(t && t.desc),
+      toastTitleSize: t && t.desc ? '16px' : '14px',
+      toastTitleWeight: t && t.plain ? 400 : 600,
+      toastClosable: tk === 'card',
+      closeToast: function () { self.setState({ toast: null }); }
+    };
+  }
+}
+window.__mountPrototype(Component);
+</script>
+</body>
+</html>
